@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native';
-import OmniMap from '../components/OmniMap';
+import OmniMap from '../components/OmniMap/OmniMap.js';
 
-export default function MapDashboard() {
+export default function MapDashboard(location) {
   return (
     <View style={styles.container}>
-      <OmniMap></OmniMap>
+      <OmniMap location={location}></OmniMap>
     </View>
   );
 }
