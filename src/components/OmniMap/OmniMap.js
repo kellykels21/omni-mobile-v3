@@ -1,20 +1,20 @@
 import { Dimensions, StyleSheet, View } from 'react-native';
 import MapView from 'react-native-maps';
 
-export default function OmniMap(location) {
-
-  console.log(location)
-  const region = {
-    longitude: location.location.location.coords.longitude,
-    latitude: location.location.location.coords.latitude,
-    longitudeDelta: 0.35,
-    latitudeDelta: 0.35
+export default function OmniMap(region) {
+  const location = {
+    longitude: region.location.longitude,
+    latitude: region.location.latitude,
+    longitudeDelta: 0.10,
+    latitudeDelta: 0.10
   }
+
   return (
     <View style={styles.container}>
       <MapView 
         showsUserLocation={true}
-        region={region}
+        provider="google"
+        region={location}
         style={styles.map}
       />
     </View>
