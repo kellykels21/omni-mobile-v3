@@ -1,11 +1,15 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import MapView from 'react-native-maps';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} />
+      <MapView 
+        showsUserLocation={true}
+        followsUserLocation={true}
+        style={styles.map}
+      />
     </View>
   );
 }
