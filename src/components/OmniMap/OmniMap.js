@@ -1,22 +1,66 @@
+import React, { useEffect, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 export default function OmniMap(location) {
-  const region = {
-    longitude: location.location.longitude,
-    latitude: location.location.latitude,
-    longitudeDelta: 0.10,
-    latitudeDelta: 0.10
+  const [region, setRegion] = useState({});
+
+  useEffect(() => {
+    const region = {
+      longitude: location.location.longitude,
+      latitude: location.location.latitude,
+      longitudeDelta: 0.10,
+      latitudeDelta: 0.10
+    }
+    setRegion(region)
+  }, [])
+  
+  const zoomToHotspot = (coordinate) => {
+    setRegion({
+      ...coordinate,
+      longitudeDelta: 0.04,
+      latitudeDelta: 0.04
+    })
   }
+
+  const onRegionChange = (region) => {
+    setRegion(region)
+  }
+
+  const hotspot = {
+    coordinate: {
+      longitude: -77.4329,
+      latitude: 37.5352
+    },
+    radius: 100,
+    fillColor: 'rgba(255, 10, 10, 0.27)'
+  }
+
+
 
   return (
     <View style={styles.container}>
+      {region.latitude && region.longitude &&
       <MapView 
         showsUserLocation={true}
-        provider="google"
         region={region}
         style={styles.map}
-      />
+        showsPointsOfInterest={false}
+        onRegionChangeComplete={onRegionChange}
+      >
+      
+    {(region.latitudeDelta > 0.09) && 
+      <Marker 
+        coordinate={hotspot.coordinate} 
+        onPress={() => {zoomToHotspot(hotspot.coordinate)}} 
+        anchor={{x: 0.5,  y: 0.5}}
+      >
+        <View style={{backgroundColor: hotspot.fillColor, padding: hotspot.radius, borderRadius: 1000}}>
+        </View>
+      </Marker>
+    } 
+      </MapView>
+    }
     </View>
   );
 }

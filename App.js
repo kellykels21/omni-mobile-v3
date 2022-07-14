@@ -1,7 +1,6 @@
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-
 import { StyleSheet, View } from 'react-native';
 import MapDashboard from './src/screens/MapDashboard';
 
