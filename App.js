@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import * as Location from 'expo-location';
+
 import { StyleSheet, View } from 'react-native';
 import MapDashboard from './src/screens/MapDashboard';
 
@@ -15,33 +15,9 @@ export default function App() {
           title: 'Omni Map',
           headerStyle: {
           backgroundColor: 'transparent'
-        }}} name="Dashboard" component={DashboardScreen} />
+        }}} name="Dashboard" component={MapDashboard} />
       </Drawer.Navigator>
     </NavigationContainer>
-  );
-}
-
-function DashboardScreen({ navigation }) {
-  const [location, setLocation] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');
-        return;
-      }
-      
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }, []);
-
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {location && <MapDashboard location={location}/>}
-      
-    </View>
   );
 }
 
