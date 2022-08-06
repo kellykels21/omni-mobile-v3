@@ -1,0 +1,107 @@
+{
+    /** instance ID for flow **/
+    "id": "930019dd-59b7-4517-852d-91d1cb213152",
+    /** typeID in datasource for "Hot Potato" **/
+    "typeID": "1",
+    /** public, private **/
+    "access": "PUBLIC",
+    /** associate business or user ID **/
+    "hostID": 1,
+    /** business or user host **/
+    "hostType": "BUSINESS",
+    /** Vicinity is a square so its easy to search greater than and less 
+    than based on requesting users location (synonymous to servicing area).  
+    Above this will be District which will allow smaller search queries.
+    Location points are processed clock wise **/
+    "vicinity":[
+        {"long":12, "lat":12},
+        {"long":12, "lat":12},
+        {"long":12, "lat":12},
+        {"long":12, "lat":12}
+    ],
+    "geofence": {
+            /** circle, polygon **/
+            "shape":"POLYGON", 
+                /** polygon has radius of zero **/
+            "radius":0,
+            /** circle has one bound point and uses radius **/
+            /** bound points are processed clockwise **/
+            "bounds":[
+                {"long":12, "lat":12},
+                {"long":12, "lat":12}
+            ]
+        },
+    "lobby": {
+        //** Current lobby instance ID **/
+        "id":"6f6d24bb-812c-44d1-ab0e-6b97a6dfb912",
+        /** status open closed **/
+        "status":"open",
+        /** number of simultaneous lobbies that can be open at the same time.  **/
+        "threads":3,
+        /** max integer or -1 for unlimited (set max 100 in backend to prevent DDOS) **/
+        "capacity":8,
+        /** max integer or -1 for unlimited number of times a lobby will renew per time period **/
+        "renewals":24,
+        /** opening time **/
+        "open": "16:00",
+        /** Absolute refresh timer **/
+        "refresh": "24:00",
+        /** time zone for countdown clock **/
+        "timezone":"EST",
+        /** release time box for threads in time format seconds (s) minutes (m) hours (h) days (d) **/
+        "release":"15m"
+    },
+    "blocks": [
+        {
+            /** process this event when complete event raised **/
+            "onEventTrigger":["start"],
+            /** blockTypeID in datasource for block type Timer **/
+            "blockTypeID":1, 
+            /** configruation properties for block loaded on default local init **/
+            "config": {
+                "timer": 60000
+            },
+            /** start event raised for all listeners **/
+            "onComplete":["interrupt"]
+        },
+        {
+            /** props object is mutable and cumulated data is passed to each subsequent block **/
+            /** process this event when assemble event raised **/
+            "onEventTrigger":["start","continue","interrupt","resume"],
+            /** blockTypeID in datasource for block type round **/
+            "blockTypeID":2, 
+            /** configruation properties for block loaded on default local init **/
+            "config": {
+                "media": [
+                    {"base":"http://cdn.omniconnect.me/1/cool_potatoe.jpg"},
+                    {"success":"http://cdn.omniconnect.me/1/cool_potatoe.jpg"},
+                    {"failure":"http://cdn.omniconnect.me/1/hot_potatoe.jpg"},
+                    {"pending":"http://cdn.omniconnect.me/1/warm_potatoe.jpg"},
+                    {"warning":"http://cdn.omniconnect.me/1/red_potatoe.jpg"}
+                ],
+                /** Milliseconds **/
+                "timer": 6000,
+                "increment": 0.25,
+                "target":5
+            },
+            /** start event raised for all listeners **/
+            "onComplete":["continue", "complete"]
+        },
+        {
+            /** process this event when complete event raised **/
+            "onEventTrigger":["complete"],
+            /** blockTypeID in datasource for block type Podium **/
+            "blockTypeID":3, 
+            /** configruation properties for block loaded on default local init **/
+            "config": {
+                /** configurable rewards **/
+                "win":"qrcode", 
+                "place":"",
+                "show":""
+            },
+            /** start event raised for all listeners **/
+            "onComplete":["end"]
+        }
+    ]
+    
+}

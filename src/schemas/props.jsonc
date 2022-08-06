@@ -1,0 +1,31 @@
+/** Props Object that will pass data initial data **/
+{
+    //** props populated on default global lifcycle event init **/
+    "props" : {
+        /** instance ID for flow **/
+        "id": 110,
+        /** typeID in datasource for "Hot Potato" **/
+        "typeID": "1",
+        "geofence": {
+                /** circle, polygon **/
+                "shape":"polygon", 
+                 /** polygon has radius of zero **/
+                "radius":0,
+                /** circle has one bound point and uses radius **/
+                /** bound points are processed clockwise **/
+                "bounds":[
+                    {"long":12, "lat":12},
+                    {"long":12, "lat":12},
+                    {"long":12, "lat":12},
+                    {"long":12, "lat":12},
+                    {"long":12, "lat":12}
+                ]
+            },
+        /** public, private **/
+        "access": "public",
+        /** associate business or user ID **/
+        "hostID": 1,
+        /** business or user host **/
+        "hostType": "business"
+    }
+}
