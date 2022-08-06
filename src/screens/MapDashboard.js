@@ -20,6 +20,8 @@ export default function MapDashboard() {
     })();
   }, []);
 
+  //Get Nearby Hotspots
+
   return (
     <View style={styles.container}>
       {location && <OmniMap location={location}></OmniMap>}
