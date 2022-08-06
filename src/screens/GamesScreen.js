@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import ProgressCircle from '../components/ProgressCircle';
 
 export default function GamesScreen() {
     return (
         <View style={styles.container}>
-            <Text>Games</Text>
+            <ProgressCircle></ProgressCircle>
         </View>
     );
 }
