@@ -1,21 +1,27 @@
 
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import GamesScreen from './src/screens/GamesScreen';
 import MapDashboard from './src/screens/MapDashboard';
 
-const Drawer = createDrawerNavigator()
+const Tabs = createBottomTabNavigator()
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator useLegacyImplementation={true} initialRouteName="Dashboard">
-        <Drawer.Screen options={{ 
+      <Tabs.Navigator useLegacyImplementation={true} initialRouteName="Dashboard">
+        <Tabs.Screen options={{ 
           title: 'Omni Map',
           headerStyle: {
           backgroundColor: 'transparent'
         }}} name="Dashboard" component={MapDashboard} />
-      </Drawer.Navigator>
+        <Tabs.Screen options={{ 
+          title: 'Games',
+          headerStyle: {
+          backgroundColor: 'transparent'
+        }}} name="Games" component={GamesScreen} />
+      </Tabs.Navigator>
     </NavigationContainer>
   );
 }
