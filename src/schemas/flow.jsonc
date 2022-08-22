@@ -53,16 +53,19 @@
     },
     "blocks": [
         {
+            "name": "lobby",
             /** process this event when complete event raised **/
-            "onEventTrigger":["start"],
+            "onEventTrigger":["init"],
             /** blockTypeID in datasource for block type Timer **/
-            "blockTypeID":1, 
+            "blockTypeID":1,
             /** configruation properties for block loaded on default local init **/
             "config": {
-                "timer": 60000
+                "timer": 60000,
+                "maxPlayers": 8,
+                // "participants": true // Optional
             },
             /** start event raised for all listeners **/
-            "onComplete":["interrupt"]
+            "onComplete":["start"]
         },
         {
             /** props object is mutable and cumulated data is passed to each subsequent block **/
@@ -72,6 +75,8 @@
             "blockTypeID":2, 
             /** configruation properties for block loaded on default local init **/
             "config": {
+                "uses": "participants",
+                "rounds": 3,
                 "media": [
                     {"base":"http://cdn.omniconnect.me/1/cool_potatoe.jpg"},
                     {"success":"http://cdn.omniconnect.me/1/cool_potatoe.jpg"},
