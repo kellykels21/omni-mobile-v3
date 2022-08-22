@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import OmniMap from '../components/OmniMap';
+import OmniMap from '../components/map/OmniMap/OmniMap';
 import * as Location from 'expo-location';
 
 export default function MapDashboard() {
