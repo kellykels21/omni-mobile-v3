@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native';
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default function SwipeCards(props) {
     let [counter, setCounter] = useState(null)
