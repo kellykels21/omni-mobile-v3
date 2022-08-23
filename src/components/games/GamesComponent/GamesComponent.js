@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { DeviceEventEmitter, StyleSheet, View } from 'react-native';
+import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native';
 import SwipeCards from '../SwipeCards/SwipeCards';
 
 export default function GamesComponent(props) {
-    let [timerLength, setTimerLength] = useState(0)
+    let [timer, setTimer] = useState(0)
+    let [started, setStarted] = useState(false)
 
-    const updateGame = () => {
+    const update = () => {
         console.log('finished swiping')
+    }
+
+    const start = () => {
+        setStarted(true)
     }
 
     //Game Setup
     useEffect(() => {
-        //TODO: Set Timer
-
-        // Setup Event Listeners
-        DeviceEventEmitter.addListener('finished', updateGame)
+        setTimer(10)
+        DeviceEventEmitter.addListener('finished', update)
+        DeviceEventEmitter.addListener('start', start)
+        start()
     }, [])
+
+    useEffect(() => {
+        const countdown = setInterval(() => {
+            setTimer(timer -= 1)
+        }, 1000)
+    }, [started])
 
     return (
         <View style={styles.container}>
+            {/* <Text>Timer: { timer }</Text> */}
             <SwipeCards swipes={5}/>
         </View>
     );

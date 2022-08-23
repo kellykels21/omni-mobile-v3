@@ -8,12 +8,18 @@ export default function SwipeCards(props) {
     //Swiper Setup
     useEffect(() => {
         setCounter(props.swipes)
+
+        //TODO: Setup on listeners for Timeouts
     }, [])
 
+    const reset = () => {
+        setCounter(props.swipes)
+    }
     //Watch Counter
     useEffect(() => {
         if (counter === 0) {
             DeviceEventEmitter.emit('finished')
+            reset()
         }
     }, [counter])
 
@@ -43,7 +49,8 @@ export default function SwipeCards(props) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      width: 500,
+      backgroundColor: 'gray',
       alignItems: 'center',
       justifyContent: 'center',
     },
