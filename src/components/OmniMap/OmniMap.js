@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Circle, Marker } from 'react-native-maps';
 
 export default function OmniMap(location) {
   const [region, setRegion] = useState({});
 
-  useEffect(() => {
+  const getInitialState = () => {
     const region = {
       longitude: location.location.longitude,
       latitude: location.location.latitude,
@@ -13,9 +13,13 @@ export default function OmniMap(location) {
       latitudeDelta: 0.10
     }
     setRegion(region)
+  }
+
+  useEffect(() => {
+    getInitialState()
   }, [])
   
-  const zoomToHotspot = (coordinate) => {
+  const zoomInToHotspot = (coordinate) => {
     setRegion({
       ...coordinate,
       longitudeDelta: 0.04,
@@ -52,7 +56,7 @@ export default function OmniMap(location) {
     {(region.latitudeDelta > 0.09) && 
       <Marker 
         coordinate={hotspot.coordinate} 
-        onPress={() => {zoomToHotspot(hotspot.coordinate)}} 
+        onPress={() => {zoomInToHotspot(hotspot.coordinate)}} 
         anchor={{x: 0.5,  y: 0.5}}
       >
         <View style={{backgroundColor: hotspot.fillColor, padding: hotspot.radius, borderRadius: 1000}}>
