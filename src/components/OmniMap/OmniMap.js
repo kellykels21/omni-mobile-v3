@@ -9,6 +9,7 @@ export default function OmniMap(location) {
   const [region, setRegion] = useState({});
   const [keyword, setKeyword] = useState({});
   const [markers,  setMarkers] = useState([])
+  const [markersVisible, setMarkersVisible] = useState(false)
 
   const setMapLocation = () => {
     const region = {
@@ -40,24 +41,24 @@ export default function OmniMap(location) {
     })
   }
 
-  const onRegionChange = (region) => {
+  const onRegionChangeComplete = (currentRegion) => {
+    console.log(currentRegion.latitudeDelta)
+    currentRegion.latitudeDelta < 0.10 ? setMarkersVisible(true) : setMarkersVisible(false)
     setRegion(region)
   }
-
-
 
   return (
     <View style={styles.container}>
       {region.latitude && region.longitude &&
       <MapView 
         showsUserLocation={true}
-        region={region}
+        initialRegion={region}
         provider="google"
         style={styles.map}
         showsPointsOfInterest={false}
-        onRegionChange={onRegionChange}
+        onRegionChangeComplete={onRegionChangeComplete}
       >
-        {markers && markers.map((marker, index) => (
+        {markers && markersVisible && markers.map((marker, index) => (
           <Marker
             key={index}
             coordinate={{latitude: marker.geometry.location.lat, longitude: marker.geometry.location.lng}}
