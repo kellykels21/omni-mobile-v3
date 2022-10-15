@@ -1,24 +1,37 @@
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
-import MapView, { Circle, Marker } from 'react-native-maps';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
 export default function OmniMap(location) {
-  const [region, setRegion] = useState({});
 
-  const getInitialState = () => {
+  const [region, setRegion] = useState({});
+  const [keyword, setKeyword] = useState({});
+  const [markers,  setMarkers] = useState([])
+
+  const setMapLocation = () => {
     const region = {
       longitude: location.location.longitude,
       latitude: location.location.latitude,
       longitudeDelta: 0.10,
       latitudeDelta: 0.10
     }
+    setKeyword('Bars')
     setRegion(region)
   }
 
+  const getLocalPOIs = async () => {
+    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=${keyword}&location=${location.location.latitude}%2C${location.location.longitude}&radius=1500&key=AIzaSyC_wOKjHc9gsCIvs4JeHiG00wez5TCaY6w`
+    const { data } = await axios.get(url)
+    if (data) setMarkers(data.results)
+  }
+
   useEffect(() => {
-    getInitialState()
+    setMapLocation()
+    getLocalPOIs()
   }, [])
-  
+
   const zoomInToHotspot = (coordinate) => {
     setRegion({
       ...coordinate,
@@ -31,15 +44,6 @@ export default function OmniMap(location) {
     setRegion(region)
   }
 
-  const hotspot = {
-    coordinate: {
-      longitude: -77.4329,
-      latitude: 37.5352
-    },
-    radius: 100,
-    fillColor: 'rgba(255, 10, 10, 0.27)'
-  }
-
 
 
   return (
@@ -48,21 +52,19 @@ export default function OmniMap(location) {
       <MapView 
         showsUserLocation={true}
         region={region}
+        provider="google"
         style={styles.map}
         showsPointsOfInterest={false}
-        onRegionChangeComplete={onRegionChange}
+        onRegionChange={onRegionChange}
       >
-      
-    {(region.latitudeDelta > 0.09) && 
-      <Marker 
-        coordinate={hotspot.coordinate} 
-        onPress={() => {zoomInToHotspot(hotspot.coordinate)}} 
-        anchor={{x: 0.5,  y: 0.5}}
-      >
-        <View style={{backgroundColor: hotspot.fillColor, padding: hotspot.radius, borderRadius: 1000}}>
-        </View>
-      </Marker>
-    } 
+        {markers && markers.map((marker, index) => (
+          <Marker
+            key={index}
+            coordinate={{latitude: marker.geometry.location.lat, longitude: marker.geometry.location.lng}}
+            title={marker.title}
+            description={marker.description}
+          />
+        ))}
       </MapView>
     }
     </View>

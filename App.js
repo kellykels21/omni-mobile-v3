@@ -1,22 +1,26 @@
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { StyleSheet } from 'react-native';
 import MapDashboard from './src/screens/MapDashboard';
 
 const Drawer = createDrawerNavigator()
+const queryClient = new QueryClient()
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator useLegacyImplementation={true} initialRouteName="Dashboard">
-        <Drawer.Screen options={{ 
-          title: 'Omni Map',
-          headerStyle: {
-          backgroundColor: 'transparent'
-        }}} name="Dashboard" component={MapDashboard} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <Drawer.Navigator useLegacyImplementation={true} initialRouteName="Dashboard">
+          <Drawer.Screen options={{ 
+            title: 'Omni Map',
+            headerStyle: {
+            backgroundColor: 'transparent'
+          }}} name="Dashboard" component={MapDashboard} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
 
