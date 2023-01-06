@@ -7,7 +7,7 @@ export default function OmniMap(location) {
 		<View style={styles.container}>
         <WebView
 		  		style={styles.map}
-            source={{ uri: 'https://www.google.com/maps' }}
+            source={{ uri: 'http://localhost:3000/map' }}
         />
 		</View>
     )
