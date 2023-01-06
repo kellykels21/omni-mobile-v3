@@ -14,6 +14,9 @@ export default function App() {
             <NavigationContainer>
                 <Tab.Navigator
                     initialRouteName="Dashboard"
+						  screenOptions={{
+							headerShown: false
+						 }}
                 >
                     <Tab.Screen
                         options={{

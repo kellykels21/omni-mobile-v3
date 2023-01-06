@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     },
     topNavContainer: {
         position: 'absolute',
-		  top: 0,
+		  top: 50,
 		  zIndex: 100,
         flexDirection: 'row',
         backgroundColor: 'transparent',
