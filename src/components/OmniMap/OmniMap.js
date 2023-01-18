@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
 import WebView from 'react-native-webview'
 
@@ -7,14 +7,17 @@ const handlePress = (tabName) => {
 }
 
 export default function OmniMap(location) {
-	const currentLocation = {lat: location.location.lat, lng: location.location.lng}
-
-	 setTimeout(() => {
-		console.log(currentLocation)
-		console.log(location.location.latitude)
-		this.webref.postMessage({longitude: location.location.longitude, latitude: location.location.latitude})
-		// this.webref.postMessage(JSON.stringify(currentLocation))
-    }, 3000);
+    useEffect(() => {
+        setTimeout(() => {
+				console.log('SENDING LOCATION DATA TO JS CLIENT...')
+				console.log('Lat: ', location.location.latitude)
+				console.log('Long: ', location.location.longitude)
+            this.webref.postMessage({
+                longitude: location.location.longitude,
+                latitude: location.location.latitude,
+            })
+        }, 1000)
+    }, [location])
 
     return (
         <View style={styles.container}>
@@ -35,7 +38,7 @@ export default function OmniMap(location) {
             <WebView
                 style={styles.map}
                 source={{ uri: 'http://localhost:3000/map' }}
-					 ref={(r) => (this.webref = r)}
+                ref={(r) => (this.webref = r)}
             />
         </View>
     )
